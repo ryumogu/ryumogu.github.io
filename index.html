@@ -5,58 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>（サークル名）公式サイト</title>
   <meta name="description" content="（サークル名）の公式サイト。作品情報、グッズ、イベント、サポート、お知らせ。" />
-  <!-- フォント -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800&display=swap" rel="stylesheet">
-  <!-- 同じ階層の styles.css を読み込み（キャッシュバスター付き） -->
-  <link rel="stylesheet" href="./styles.css?v=20250819-1" />
+  <link rel="stylesheet" href="./styles.css?v=20250819-2" />
   <link rel="icon" href="./assets/favicon.png" />
 </head>
 <body>
-  <!-- キーボード操作用スキップリンク -->
   <a class="skip-link" href="#main">メインに移動</a>
 
-  <!-- 上部ユーティリティ -->
-  <div class="utility-bar">
-    <div class="container">
-      <nav class="utility-nav" aria-label="ユーティリティ">
-        <ul>
-          <li><a href="#" target="_blank" rel="noopener">BLOG</a></li>
-          <li><a href="#" target="_blank" rel="noopener">Online Shop</a></li>
-          <li><a href="#" target="_blank" rel="noopener">RECRUIT</a></li>
-          <li><a href="#" target="_blank" rel="noopener">（関連ブランド）</a></li>
-        </ul>
-      </nav>
-      <div class="social">
-        <a href="#" aria-label="X / Twitter">X</a>
-        <a href="#" aria-label="YouTube">YouTube</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ヘッダー -->
-  <header class="site-header">
-    <div class="container">
-      <a class="logo" href="/">
-        <img src="./assets/logo.svg" alt="（サークル名）" width="160" height="40" />
+  <!-- 画面上部：セグメント型のメインナビ -->
+  <header class="site-header" role="banner">
+    <nav class="bar-nav" aria-label="メイン">
+      <a class="bar-logo" href="/" aria-label="Top">
+        <img src="./assets/logo_mark.svg" alt="">
       </a>
-
-      <!-- ハンバーガーはdetailsでJS不要 -->
-      <details class="main-nav" role="navigation">
-        <summary aria-label="メニューを開閉">MENU</summary>
-        <nav aria-label="グローバル">
-          <ul>
-            <li><a href="/">TOP</a></li>
-            <li><a href="#products">PRODUCT</a></li>
-            <li><a href="#goods">GOODS</a></li>
-            <li><a href="#events">EVENT</a></li>
-            <li><a href="#support">SUPPORT</a></li>
-            <li><a href="#news">INFORMATION</a></li>
-            <li><a href="#contact">CONTACT</a></li>
-            <li><a href="#links">LINK</a></li>
-          </ul>
-        </nav>
-      </details>
-    </div>
+      <a class="bar-link is-active" href="#products"><span class="en">PRODUCT</span><small>製品情報</small></a>
+      <a class="bar-link" href="#goods"><span class="en">GOODS</span><small>関連グッズ</small></a>
+      <a class="bar-link" href="#events"><span class="en">EVENT</span><small>イベント情報</small></a>
+      <a class="bar-link" href="#support"><span class="en">SUPPORT</span><small>サポート</small></a>
+      <a class="bar-link" href="#news"><span class="en">INFORMATION</span><small>インフォメーション</small></a>
+      <a class="bar-link" href="#contact"><span class="en">CONTACT</span><small>お問い合わせ</small></a>
+      <a class="bar-link" href="#links"><span class="en">LINK</span><small>リンク</small></a>
+    </nav>
   </header>
 
   <main id="main">
@@ -64,15 +33,9 @@
     <section class="hero">
       <div class="container">
         <div class="hero-track">
-          <a class="hero-slide" href="#">
-            <img src="./assets/hero_01.jpg" alt="新作タイトル『Sample Days』特設サイトへ" loading="lazy" />
-          </a>
-          <a class="hero-slide" href="#">
-            <img src="./assets/hero_02.jpg" alt="ダウンロード版 配信開始" loading="lazy" />
-          </a>
-          <a class="hero-slide" href="#">
-            <img src="./assets/hero_03.jpg" alt="コンプリートパックのご案内" loading="lazy" />
-          </a>
+          <a class="hero-slide" href="#"><img src="./assets/hero_01.jpg" alt="新作タイトル『Sample Days』特設サイトへ" loading="lazy" /></a>
+          <a class="hero-slide" href="#"><img src="./assets/hero_02.jpg" alt="ダウンロード版 配信開始" loading="lazy" /></a>
+          <a class="hero-slide" href="#"><img src="./assets/hero_03.jpg" alt="コンプリートパックのご案内" loading="lazy" /></a>
         </div>
       </div>
     </section>
@@ -80,16 +43,9 @@
     <!-- ピックアップ -->
     <section class="pickup">
       <div class="container grid-3">
-        <a class="pickup-card" href="#">
-          <img src="./assets/pickup_01.jpg" alt="メインヒロインCV・体験版公開" loading="lazy" />
-          <span class="badge">NEW</span>
-        </a>
-        <a class="pickup-card" href="#">
-          <img src="./assets/pickup_02.jpg" alt="公式ページ公開" loading="lazy" />
-        </a>
-        <a class="pickup-card" href="#">
-          <img src="./assets/pickup_03.jpg" alt="サブスク配信情報" loading="lazy" />
-        </a>
+        <a class="pickup-card" href="#"><img src="./assets/pickup_01.jpg" alt="メインヒロインCV・体験版公開" loading="lazy" /><span class="badge">NEW</span></a>
+        <a class="pickup-card" href="#"><img src="./assets/pickup_02.jpg" alt="公式ページ公開" loading="lazy" /></a>
+        <a class="pickup-card" href="#"><img src="./assets/pickup_03.jpg" alt="サブスク配信情報" loading="lazy" /></a>
       </div>
     </section>
 
@@ -101,22 +57,10 @@
           <a class="more" href="#">すべて見る</a>
         </header>
         <ul class="news-list">
-          <li>
-            <time datetime="2025-08-10">25/08/10</time>
-            <a href="#">『Sample Days』公式ページでサンプルボイスを公開しました</a>
-          </li>
-          <li>
-            <time datetime="2025-07-26">25/07/26</time>
-            <a href="#">体験版（α）を公開しました</a>
-          </li>
-          <li>
-            <time datetime="2025-07-04">25/07/04</time>
-            <a href="#">『Sample Days』ティザーページを公開しました</a>
-          </li>
-          <li>
-            <time datetime="2024-12-29">24/12/29</time>
-            <a href="#">キャラクターソングアルバム支援者様一覧を公開しました</a>
-          </li>
+          <li><time datetime="2025-08-10">25/08/10</time><a href="#">『Sample Days』公式ページでサンプルボイスを公開しました</a></li>
+          <li><time datetime="2025-07-26">25/07/26</time><a href="#">体験版（α）を公開しました</a></li>
+          <li><time datetime="2025-07-04">25/07/04</time><a href="#">『Sample Days』ティザーページを公開しました</a></li>
+          <li><time datetime="2024-12-29">24/12/29</time><a href="#">キャラクターソングアルバム支援者様一覧を公開しました</a></li>
         </ul>
       </div>
     </section>
@@ -128,24 +72,11 @@
           <h2>PRODUCTS</h2>
           <a class="more" href="#">ラインアップ</a>
         </header>
-
         <div class="product-grid">
-          <a class="product-card" href="#">
-            <img src="./assets/product_01.jpg" alt="Sample Days plus" loading="lazy" />
-            <h3>Sample Days plus</h3>
-          </a>
-          <a class="product-card" href="#">
-            <img src="./assets/product_02.jpg" alt="よめ◯◯ ダウンロード版" loading="lazy" />
-            <h3>よめ◯◯（DL）</h3>
-          </a>
-          <a class="product-card" href="#">
-            <img src="./assets/product_03.jpg" alt="新本 PREMIUM PACK" loading="lazy" />
-            <h3>新本 PREMIUM PACK</h3>
-          </a>
-          <a class="product-card" href="#">
-            <img src="./assets/product_04.jpg" alt="Complete Pack（DL）" loading="lazy" />
-            <h3>Complete Pack（DL）</h3>
-          </a>
+          <a class="product-card" href="#"><img src="./assets/product_01.jpg" alt="Sample Days plus" loading="lazy" /><h3>Sample Days plus</h3></a>
+          <a class="product-card" href="#"><img src="./assets/product_02.jpg" alt="よめ◯◯ ダウンロード版" loading="lazy" /><h3>よめ◯◯（DL）</h3></a>
+          <a class="product-card" href="#"><img src="./assets/product_03.jpg" alt="新本 PREMIUM PACK" loading="lazy" /><h3>新本 PREMIUM PACK</h3></a>
+          <a class="product-card" href="#"><img src="./assets/product_04.jpg" alt="Complete Pack（DL）" loading="lazy" /><h3>Complete Pack（DL）</h3></a>
         </div>
       </div>
     </section>
@@ -207,9 +138,7 @@
   <!-- フッター -->
   <footer class="site-footer">
     <div class="container">
-      <a class="footer-logo" href="/">
-        <img src="./assets/logo_mono.svg" alt="（サークル名）" width="140" height="32" />
-      </a>
+      <a class="footer-logo" href="/"><img src="./assets/logo_mono.svg" alt="（サークル名）" width="140" height="32" /></a>
       <small lang="en">© (Circle Name) All rights reserved.</small>
       <nav aria-label="フッターナビ">
         <ul>

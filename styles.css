@@ -29,12 +29,11 @@ h3 { margin:0 0 18px; font-size:1.4rem; }
 @media (max-width:640px){ .hero h2{ font-size:1.8rem;} nav a{ margin-left:12px; } }
 
 /* === グラフィカル強化 === */
-.hero-rich {
-  /* 背景画像 + グラデ + ぼかし */
+.hero-rich{
   background:
     radial-gradient(1200px 600px at 80% -20%, rgba(92,200,255,.35), transparent 60%),
     linear-gradient(180deg, rgba(8, 12, 18, .0), rgba(8, 12, 18, 1) 70%),
-    url('/assets/hero.jpg') center/cover no-repeat;
+    url('assets/hero.jpg') center/cover no-repeat; /* ← ここを /assets ではなく assets */
   padding: 96px 0 88px;
   position: relative;
   overflow: hidden;

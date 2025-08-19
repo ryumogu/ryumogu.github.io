@@ -1,4 +1,4 @@
-/* ========== ベース変数（ポップ系カラー） ========== */
+/* ========== カラーテーマ（ポップ＆淡いトーン） ========== */
 :root{
   --bg:#fff7fb;        /* やわらかい背景 */
   --paper:#ffffff;     /* カードの紙色   */
@@ -9,23 +9,20 @@
   --accent3:#7ee787;   /* アクセント③    */
 }
 
-/* ========== 共通リセット / フォントレンダリング最適化 ========== */
+/* ========== 共通リセット / フォント設定 ========== */
 *{ box-sizing:border-box; margin:0; padding:0; }
 html,body{ height:100%; }
 html, body{
-  -webkit-font-smoothing: antialiased;    /* mac系 */
-  -moz-osx-font-smoothing: grayscale;     /* mac Firefox */
-  text-rendering: optimizeLegibility;     /* 合字・AA優先（効果は環境依存） */
-  font-size: 17px;                         /* 小さすぎるとギザる→少し大きめ */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 17px; 
   line-height: 1.7;
 }
 body{
-  /* 本文は日本語OSフォント寄り → Windowsで安定 */
-  font-family:
-    "Meiryo", "M PLUS Rounded 1c",
-    "Yu Gothic UI", "Yu Gothic",
-    "Hiragino Kaku Gothic ProN", "Noto Sans JP",
-    system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: "Noto Sans JP", "Meiryo", "Yu Gothic UI",
+               "Hiragino Kaku Gothic ProN", sans-serif;
+  font-weight: 400;
   color:var(--ink);
   background:
     radial-gradient(80vmax 60vmax at 10% -10%, #ffe3f7 0%, transparent 60%),
@@ -36,25 +33,21 @@ body{
 a{ color:var(--accent); text-decoration:none; }
 img{ max-width:100%; display:block; }
 ul{ list-style:none; }
-
-/* ========== レイアウト共通 ========== */
 .container{ width:min(1100px,92%); margin-inline:auto; }
 
 /* ========== ヘッダー（不透明背景でAA維持） ========== */
 .site-header{
   position:sticky; top:0; z-index:10;
-  background:#ffffff;                     /* 半透明やblurを使わない */
+  background:#ffffff; 
   border-bottom:4px solid #ffe0f6;
-  /* backdrop-filter: 使わない（サブピクセルAAが消えがち） */
 }
 .site-header .container{
   display:flex; align-items:center; justify-content:space-between; padding:14px 0;
 }
 .logo{ font-weight:800; font-size:1.25rem; }
 .logo a{ color:var(--ink); }
-/* 見出しやボタンは英字POPを優先 */
 .logo, h1, h2, h3, .btn{
-  font-family: "Fredoka", "M PLUS Rounded 1c", "Meiryo", system-ui, sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-weight:700;
 }
 nav a{
@@ -66,43 +59,53 @@ nav a:hover, nav a.active{
   color:white;
 }
 
-/* ========== ヒーロー（不透明“ガラス風”でAA維持） ========== */
+/* ========== ヒーロー ========== */
 .hero, .hero-rich{
   padding:96px 0 88px;
   text-align:center;
   background:
-    radial-gradient(60vmax 30vmax at 80% -10%, rgba(255,107,214,.18), transparent 60%),
-    radial-gradient(60vmax 40vmax at 0% 120%, rgba(106,168,255,.18), transparent 60%),
+    radial-gradient(60vmax 30vmax at 80% -10%, rgba(255,107,214,.15), transparent 60%),
+    radial-gradient(60vmax 40vmax at 0% 120%, rgba(106,168,255,.15), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,1) 75%);
 }
 .hero h2{ font-size:2.2rem; margin-bottom:.4em; }
 .hero p{ color:var(--muted); max-width:50ch; margin:0 auto 1.2em; }
-/* ぼかしの代わりに枠・影で“ガラス風”を再現（文字はくっきり） */
 .glass{
-  background:#ffffff;                      /* 不透明でAA維持 */
+  background:#ffffff;
   border:3px solid #ffe0f6;
   border-radius:24px;
   padding:32px 22px;
   box-shadow:0 18px 40px rgba(255,107,214,.12);
-  /* backdrop-filter: 使わない */
 }
 .hero-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 
-/* ========== ボタン（ぷにっと感） ========== */
+/* ========== ボタン（淡い単色＆影半分） ========== */
 .btn{
-  display:inline-block; padding:12px 20px;
-  border-radius:999px; font-weight:800;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:white;
-  box-shadow:0 10px 0 #ffc5ec;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  padding:12px 20px;
+  line-height:1;
+  border-radius:999px;
+  font-weight:700;
+  border:2px solid transparent;
+
+  background:#ffe4f2;          /* 淡いピンク単色 */
+  color:#25303b;
+
+  box-shadow:0 5px 0 #fbcce2;  /* 影の厚みを半分に */
+
   transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
 }
-.btn:hover{ filter:saturate(120%); }
-.btn:active{ transform:translateY(2px); box-shadow:0 8px 0 #ffb0e4; }
+.btn:hover{ filter:saturate(110%); }
+.btn:active{ transform:translateY(2px); box-shadow:0 3px 0 #f7b9d8; }
+
 .btn.ghost{
-  background:white; color:var(--ink);
-  border:3px solid #dbe7ff;
-  box-shadow:0 10px 0 #cfe0ff;
+  background:#fff;
+  color:var(--ink);
+  border:2px solid #dbe7ff;
+  box-shadow:0 5px 0 #cfe0ff;
 }
 
 /* ========== セクション ========== */
@@ -117,7 +120,6 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
 /* ========== グリッド / カード ========== */
 .grid{ display:grid; gap:18px; }
 .grid-works{ grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
-
 .card{
   background:var(--paper);
   border:4px solid #ffe0f6;
@@ -126,7 +128,6 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
   box-shadow:0 14px 30px rgba(0,0,0,.05);
   transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
   position:relative;
-  /* transformは使わない（hover時のみ少量）。親での常時transformはAAに不利 */
 }
 .card:hover{
   transform:translateY(-4px) rotate(-.2deg);
@@ -136,7 +137,7 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
 .card-body{ padding:14px; }
 .card h4{ font-size:1.2rem; margin-bottom:.3em; }
 .card .meta{ color:#7a8b9a; font-weight:700; font-size:.9rem; margin-bottom:.5em; }
-.actions{ display:flex; gap:8px; flex-wrap:wrap; }
+.actions{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 
 /* NEWバッジ */
 .badge{
@@ -155,8 +156,8 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
 /* ========== フィルターピル（作品ページ用） ========== */
 .filters{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
 .pill{
-  background:white; color:var(--ink);
-  border:3px solid #dbe7ff;
+  background:#fff; color:var(--ink);
+  border:2px solid #dbe7ff;
   border-radius:999px; padding:8px 14px; cursor:pointer; font-weight:600;
 }
 .pill.active,.pill:hover{
@@ -180,44 +181,4 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
 @media (max-width:640px){
   .hero h2{ font-size:1.9rem; }
   nav a{ margin-left:10px; }
-}
-
-/* ===== Button alignment fix ===== */
-/* ボタンを同じ「外形」にする：両方とも同じ枠・同じパディング・同じ行高 */
-.actions{
-  display:flex;
-  gap:12px;
-  align-items:center;   /* 行内で縦中央にそろえる */
-  flex-wrap:wrap;
-}
-
-.btn{
-  display:inline-flex;                 /* 行の基線影響をなくし高さを統一 */
-  align-items:center;
-  justify-content:center;
-  white-space:nowrap;
-  padding:12px 20px;
-  line-height:1;                       /* フォント差の影響を受けにくく */
-  border-radius:999px;
-  font-weight:800;
-
-  /* どちらのボタンにも同じ太さの枠を付与して外形を一致させる */
-  border:3px solid transparent;
-
-  /* 影も同じ量にして視覚的な“浮き”をそろえる */
-  box-shadow:0 10px 0 #ffc5ec;
-
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:#fff;
-  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
-}
-.btn:hover{ filter:saturate(120%); }
-.btn:active{ transform:translateY(2px); box-shadow:0 8px 0 #ffb0e4; }
-
-/* ゴーストボタンは色だけ変更（外形は同じ） */
-.btn.ghost{
-  background:#fff;
-  color:var(--ink);
-  border-color:#dbe7ff;                /* 同じ3px枠：高さが揃う */
-  box-shadow:0 10px 0 #cfe0ff;         /* 影量も同じ */
 }

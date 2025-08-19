@@ -191,3 +191,38 @@ body {
 .logo, h1, h2, h3, .btn {
   font-family: "Fredoka", "M PLUS Rounded 1c", system-ui, sans-serif;
 }
+
+
+/* --- 文字のにじみ/ギザ軽減（環境依存） --- */
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 17px; /* 小さすぎるとギザるので少し拡大 */
+}
+
+/* --- サブピクセルAAを殺しやすい要素の調整 --- */
+.site-header {
+  backdrop-filter: none !important;               /* ぼかしOFF */
+  background: rgba(255,255,255,.98) !important;   /* 代替背景 */
+}
+.glass {
+  backdrop-filter: none !important;
+  background: rgba(255,255,255,.92) !important;
+}
+.hero, .hero-rich, .glass {
+  transform: none !important;   /* ホバー時の微妙なズレを抑制 */
+  will-change: auto !important;
+}
+
+/* --- フォント構成：本文は日本語システム寄りに、見出しだけ英字POP --- */
+body {
+  font-family: "M PLUS Rounded 1c", "Yu Gothic UI", "Yu Gothic",
+               "Hiragino Kaku Gothic ProN", "Meiryo",
+               system-ui, -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+  font-weight: 400;
+}
+.logo, h1, h2, h3, .btn {
+  font-family: "Fredoka", "M PLUS Rounded 1c", system-ui, sans-serif;
+  font-weight: 700;
+}

@@ -4,142 +4,218 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>（サークル名）公式サイト</title>
-  <meta name="description" content="（サークル名）の公式サイト。制作ゲームの情報、ニュース、お問い合わせ。">
-  <meta name="format-detection" content="telephone=no" />
+  <meta name="description" content="（サークル名）の公式サイト。作品情報、グッズ、イベント、サポート、お知らせ。" />
+  <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="./assets/favicon.png" />
-  <!-- フォント指定 -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-  <!-- スタイル（キャッシュ回避のため v=2） -->
-  <link rel="stylesheet" href="./styles.css?v=2">
 </head>
 <body>
-  <!-- ================= Header ================= -->
+  <!-- キーボード操作用スキップリンク -->
+  <a class="skip-link" href="#main">メインに移動</a>
+
+  <!-- 上部ユーティリティ（ブログ/ショップ/採用/ブランド など） -->
+  <div class="utility-bar">
+    <div class="container">
+      <nav class="utility-nav" aria-label="ユーティリティ">
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">BLOG</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Online Shop</a></li>
+          <li><a href="#" target="_blank" rel="noopener">RECRUIT</a></li>
+          <li><a href="#" target="_blank" rel="noopener">（関連ブランド）</a></li>
+        </ul>
+      </nav>
+      <div class="social">
+        <a href="#" aria-label="X / Twitter">X</a>
+        <a href="#" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ヘッダー -->
   <header class="site-header">
     <div class="container">
-      <h1 class="logo"><a href="./">（サークル名）</a></h1>
-      <nav>
-        <a href="./works/">作品</a>
-        <a href="./#about">サークル</a>
-        <a href="./#news">ニュース</a>
-        <a href="./#contact">お問い合わせ</a>
-      </nav>
+      <a class="logo" href="/">
+        <img src="./assets/logo.svg" alt="（サークル名）" width="160" height="40" />
+      </a>
+
+      <!-- ハンバーガーはdetailsでJS不要 -->
+      <details class="main-nav" role="navigation">
+        <summary aria-label="メニューを開閉">MENU</summary>
+        <nav aria-label="グローバル">
+          <ul>
+            <li><a href="/">TOP</a></li>
+            <li><a href="#products">PRODUCT</a></li>
+            <li><a href="#goods">GOODS</a></li>
+            <li><a href="#events">EVENT</a></li>
+            <li><a href="#support">SUPPORT</a></li>
+            <li><a href="#news">INFORMATION</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+            <li><a href="#links">LINK</a></li>
+          </ul>
+        </nav>
+      </details>
     </div>
   </header>
 
-  <!-- ================= Hero ================= -->
-  <section class="hero hero-rich">
-    <div class="container glass">
-      <h2>ゲームで、もっとワクワクを。</h2>
-      <p>インディーゲームを制作・販売するサークルです。PC / モバイル向けの2D・3D作品を中心に活動中。</p>
-      <div class="hero-actions">
-        <a class="btn" href="./works/">作品を見る</a>
-        <a class="btn ghost" href="./#contact">問い合わせ</a>
+  <main id="main">
+    <!-- ヒーロー（スライド風の大バナー。CSSで横スクロール/フェードにできます） -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-track">
+          <a class="hero-slide" href="#">
+            <img src="./assets/hero_01.jpg" alt="新作タイトル『Sample Days』特設サイトへ" />
+          </a>
+          <a class="hero-slide" href="#">
+            <img src="./assets/hero_02.jpg" alt="ダウンロード版 配信開始" />
+          </a>
+          <a class="hero-slide" href="#">
+            <img src="./assets/hero_03.jpg" alt="コンプリートパックのご案内" />
+          </a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ================= Works (pickup) ================= -->
-  <section id="works" class="section">
-    <div class="container">
-      <h3>注目タイトル</h3>
-      <div class="grid grid-works">
-        <!-- 作品カード（必要数だけ複製して差し替え） -->
-        <article class="card">
+    <!-- ピックアップバナー（大きな告知） -->
+    <section class="pickup">
+      <div class="container grid-3">
+        <a class="pickup-card" href="#">
+          <img src="./assets/pickup_01.jpg" alt="メインヒロインCV・体験版公開" />
           <span class="badge">NEW</span>
-          <img src="./assets/sample-1.jpg" alt="作品Aのスクリーンショット">
-          <div class="card-body">
-            <h4>作品タイトルA</h4>
-            <p class="meta">PC / 2D Action</p>
-            <p>高速アクションとスコアアタックが特徴の短編タイトル。</p>
-            <div class="actions">
-              <a class="btn ghost" href="#" target="_blank" rel="noopener">トレーラー</a>
-              <a class="btn" href="#" target="_blank" rel="noopener">購入 / DL</a>
-            </div>
-          </div>
-        </article>
+        </a>
+        <a class="pickup-card" href="#">
+          <img src="./assets/pickup_02.jpg" alt="公式ページ公開" />
+        </a>
+        <a class="pickup-card" href="#">
+          <img src="./assets/pickup_03.jpg" alt="サブスク配信情報" />
+        </a>
+      </div>
+    </section>
 
-        <article class="card">
-          <img src="./assets/sample-2.jpg" alt="作品Bのスクリーンショット">
-          <div class="card-body">
-            <h4>作品タイトルB</h4>
-            <p class="meta">Steam / Puzzle</p>
-            <p>直感操作のパズル。全50ステージ・実績対応。</p>
-            <div class="actions">
-              <a class="btn ghost" href="#" target="_blank" rel="noopener">トレーラー</a>
-              <a class="btn" href="#" target="_blank" rel="noopener">Steam</a>
-            </div>
-          </div>
+    <!-- NEWS / INFORMATION（時系列リスト） -->
+    <section id="news" class="news">
+      <div class="container">
+        <header class="section-header">
+          <h2>NEWS</h2>
+          <a class="more" href="#">すべて見る</a>
+        </header>
+        <ul class="news-list">
+          <!-- 例：最新順。日付は <time> を使用 -->
+          <li>
+            <time datetime="2025-08-10">25/08/10</time>
+            <a href="#">『Sample Days』公式ページでサンプルボイスを公開しました</a>
+          </li>
+          <li>
+            <time datetime="2025-07-26">25/07/26</time>
+            <a href="#">体験版（α）を公開しました</a>
+          </li>
+          <li>
+            <time datetime="2025-07-04">25/07/04</time>
+            <a href="#">『Sample Days』ティザーページを公開しました</a>
+          </li>
+          <li>
+            <time datetime="2024-12-29">24/12/29</time>
+            <a href="#">キャラクターソングアルバム支援者様一覧を公開しました</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PRODUCTS（サムネイル一覧） -->
+    <section id="products" class="products">
+      <div class="container">
+        <header class="section-header">
+          <h2>PRODUCTS</h2>
+          <a class="more" href="#">ラインアップ</a>
+        </header>
+
+        <div class="product-grid">
+          <a class="product-card" href="#">
+            <img src="./assets/product_01.jpg" alt="Sample Days plus" />
+            <h3>Sample Days plus</h3>
+          </a>
+          <a class="product-card" href="#">
+            <img src="./assets/product_02.jpg" alt="よめ◯◯ ダウンロード版" />
+            <h3>よめ◯◯（DL）</h3>
+          </a>
+          <a class="product-card" href="#">
+            <img src="./assets/product_03.jpg" alt="新本 PREMIUM PACK" />
+            <h3>新本 PREMIUM PACK</h3>
+          </a>
+          <a class="product-card" href="#">
+            <img src="./assets/product_04.jpg" alt="Complete Pack（DL）" />
+            <h3>Complete Pack（DL）</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOODS -->
+    <section id="goods" class="goods">
+      <div class="container">
+        <header class="section-header">
+          <h2>GOODS</h2>
+          <a class="more" href="#">オンラインショップ</a>
+        </header>
+        <div class="banner-row">
+          <a href="#"><img src="./assets/goods_01.jpg" alt="抱き枕カバー 一般販売" /></a>
+          <a href="#"><img src="./assets/goods_02.jpg" alt="イベント限定グッズ" /></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENT / SUPPORT -->
+    <section id="events" class="events-support">
+      <div class="container grid-2">
+        <article class="panel">
+          <h2>EVENT</h2>
+          <ul class="link-list">
+            <li><a href="#">電気外祭り 出展情報</a></li>
+            <li><a href="#">character1 出展情報</a></li>
+          </ul>
+        </article>
+        <article id="support" class="panel">
+          <h2>SUPPORT</h2>
+          <ul class="link-list">
+            <li><a href="#">サポート情報（FAQ/アップデータ）</a></li>
+            <li><a href="#">お問い合わせフォーム</a></li>
+          </ul>
         </article>
       </div>
+    </section>
 
-      <p style="text-align:center; margin-top:16px;">
-        <a class="btn ghost" href="./works/">すべての作品を見る</a>
-      </p>
-    </div>
-  </section>
+    <!-- 連絡先/リンク -->
+    <section id="contact" class="contact-links">
+      <div class="container grid-2">
+        <article class="panel">
+          <h2>CONTACT</h2>
+          <p>製品やイベントに関するお問い合わせはフォームからお願いいたします。</p>
+          <p><a class="button" href="#">お問い合わせフォームへ</a></p>
+        </article>
+        <article id="links" class="panel">
+          <h2>LINK</h2>
+          <ul class="link-list">
+            <li><a href="#" target="_blank" rel="noopener">公式X（Twitter）</a></li>
+            <li><a href="#" target="_blank" rel="noopener">公式YouTube</a></li>
+            <li><a href="#" target="_blank" rel="noopener">開発ブログ</a></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
 
-  <!-- ================= About ================= -->
-  <section id="about" class="section alt">
-    <div class="container">
-      <h3>サークルについて</h3>
-      <p>（サークルの紹介文。得意分野、開発ツール、活動歴、イベント参加などを1〜3段落で）</p>
-      <ul class="members">
-        <li><strong>リーダー / プロデューサー：</strong>名前</li>
-        <li><strong>プログラマー：</strong>名前</li>
-        <li><strong>デザイナー：</strong>名前</li>
-        <li><strong>サウンド：</strong>名前</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= News ================= -->
-  <section id="news" class="section">
-    <div class="container">
-      <h3>ニュース</h3>
-      <ul class="news">
-        <li><time datetime="2025-08-01">2025/08/01</time> 夏コミ出展情報を公開しました。</li>
-        <li><time datetime="2025-07-15">2025/07/15</time> 新作デモ版をリリースしました。</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= Contact ================= -->
-  <section id="contact" class="section alt">
-    <div class="container">
-      <h3>お問い合わせ</h3>
-      <p>取材・コラボ・配信ガイドライン等のご連絡は下記からどうぞ。</p>
-
-      <!-- 1) Googleフォーム埋め込み（おすすめ）：URLを差し替えて使用 -->
-      <!--
-      <iframe
-        src="https://docs.google.com/forms/d/e/ここにフォームIDを入れる/viewform?embedded=true"
-        width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">
-        読み込んでいます…
-      </iframe>
-      -->
-
-      <!-- 2) ひとまずメールリンク -->
-      <p><a class="btn" href="mailto:contact@example.com">メールで問い合わせる</a></p>
-    </div>
-  </section>
-
-  <!-- ================= Footer ================= -->
+  <!-- フッター -->
   <footer class="site-footer">
     <div class="container">
-      <small>© <span id="year"></span> （サークル名）</small>
-      <div class="sns">
-        <a href="#" target="_blank" rel="noopener">X（Twitter）</a>
-        <a href="#" target="_blank" rel="noopener">YouTube</a>
-        <a href="#" target="_blank" rel="noopener">BOOTH</a>
-        <a href="#" target="_blank" rel="noopener">Steam</a>
-      </div>
+      <a class="footer-logo" href="/">
+        <img src="./assets/logo_mono.svg" alt="（サークル名）" width="140" height="32" />
+      </a>
+      <small lang="en">© (Circle Name) All rights reserved.</small>
+      <nav aria-label="フッターナビ">
+        <ul>
+          <li><a href="#">プライバシーポリシー</a></li>
+          <li><a href="#">特定商取引法に基づく表記</a></li>
+        </ul>
+      </nav>
     </div>
   </footer>
-
-  <!-- ================= Scripts ================= -->
-  <script>
-    // 年号の自動更新
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>

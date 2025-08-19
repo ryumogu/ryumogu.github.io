@@ -181,3 +181,43 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
   .hero h2{ font-size:1.9rem; }
   nav a{ margin-left:10px; }
 }
+
+/* ===== Button alignment fix ===== */
+/* ボタンを同じ「外形」にする：両方とも同じ枠・同じパディング・同じ行高 */
+.actions{
+  display:flex;
+  gap:12px;
+  align-items:center;   /* 行内で縦中央にそろえる */
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;                 /* 行の基線影響をなくし高さを統一 */
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  padding:12px 20px;
+  line-height:1;                       /* フォント差の影響を受けにくく */
+  border-radius:999px;
+  font-weight:800;
+
+  /* どちらのボタンにも同じ太さの枠を付与して外形を一致させる */
+  border:3px solid transparent;
+
+  /* 影も同じ量にして視覚的な“浮き”をそろえる */
+  box-shadow:0 10px 0 #ffc5ec;
+
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:#fff;
+  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.btn:hover{ filter:saturate(120%); }
+.btn:active{ transform:translateY(2px); box-shadow:0 8px 0 #ffb0e4; }
+
+/* ゴーストボタンは色だけ変更（外形は同じ） */
+.btn.ghost{
+  background:#fff;
+  color:var(--ink);
+  border-color:#dbe7ff;                /* 同じ3px枠：高さが揃う */
+  box-shadow:0 10px 0 #cfe0ff;         /* 影量も同じ */
+}

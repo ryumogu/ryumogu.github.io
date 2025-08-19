@@ -76,3 +76,104 @@ nav a.active { color: var(--ink); border-bottom: 2px solid var(--accent); paddin
 
 /* コンパクトヒーロー（作品ページ） */
 .hero-compact { padding: 60px 0 40px; background: linear-gradient(180deg, #0b0d12, #0b0d12 60%); text-align:center; }
+
+/* ===== Pop Theme – pastel, rounded, playful ===== */
+:root{
+  --bg:#fff7fb;        /* やわらかい背景 */
+  --paper:#ffffff;     /* カードの紙色   */
+  --ink:#25303b;       /* 文字色         */
+  --muted:#6a7b88;     /* 補助文字       */
+  --accent:#ff6bd6;    /* メイン色       */
+  --accent2:#6aa8ff;   /* サブ色         */
+  --accent3:#7ee787;   /* アクセント③    */
+}
+
+/* 角丸と影を全体的に強めに */
+*{ border-radius:0 }
+body{
+  font-family:"Fredoka","M PLUS Rounded 1c",system-ui,-apple-system,"Segoe UI","Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(80vmax 60vmax at 10% -10%, #ffe3f7 0%, transparent 60%),
+    radial-gradient(70vmax 50vmax at 110% 10%, #e0f3ff 0%, transparent 60%),
+    radial-gradient(60vmax 40vmax at 50% 120%, #eafff2 0%, transparent 60%),
+    var(--bg);
+}
+
+/* ヘッダーを白ベース＋下線 */
+.site-header{
+  background:rgba(255,255,255,.85);
+  border-bottom:4px solid #ffe0f6;
+  backdrop-filter:saturate(160%) blur(8px);
+}
+.logo{ font-weight:800; letter-spacing:.02em }
+nav a{
+  font-weight:700; padding:6px 10px; border-radius:12px;
+}
+nav a:hover, nav a.active{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:white;
+}
+
+/* ヒーローをポップに */
+.hero, .hero-rich{
+  padding:96px 0 88px;
+  background:
+    radial-gradient(60vmax 30vmax at 80% -10%, rgba(255,107,214,.18), transparent 60%),
+    radial-gradient(60vmax 40vmax at 0% 120%, rgba(106,168,255,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,1) 75%);
+  text-align:center;
+}
+.glass{
+  background:rgba(255,255,255,.7);
+  border:3px solid #ffe0f6;
+  border-radius:24px;
+  padding:32px 22px;
+  box-shadow:0 18px 40px rgba(255,107,214,.15);
+}
+
+/* ボタンを“ぷにっ”と */
+.btn{
+  border-radius:999px;
+  padding:12px 20px;
+  font-weight:800;
+  box-shadow:0 10px 0 #ffc5ec;
+  transform:translateY(0);
+  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease, background .2s ease;
+}
+.btn:hover{ filter:saturate(120%) }
+.btn:active{ transform:translateY(2px); box-shadow:0 8px 0 #ffb0e4 }
+.btn.ghost{
+  background:white; color:var(--ink); border:3px solid #dbe7ff; box-shadow:0 10px 0 #cfe0ff;
+}
+.btn{ background:linear-gradient(90deg,var(--accent),var(--accent2)); color:white; }
+
+/* セクションの紙感 */
+.section{ padding:56px 0 }
+.section.alt{ background:linear-gradient(#fff,#fff) padding-box, linear-gradient(90deg,#ffe0f6,#dbe7ff) border-box; border:4px solid transparent; }
+
+/* 作品カードをステッカー風に */
+.card{
+  background:var(--paper);
+  border:4px solid #ffe0f6;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 14px 30px rgba(0,0,0,.05);
+  transform:translateY(0);
+  transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform:translateY(-4px) rotate(-.2deg);
+  box-shadow:0 24px 40px rgba(255,107,214,.15);
+  border-color:#ffc5ec;
+}
+.card img{ background:#f7fbff }
+.card h4, .card .meta{ font-weight:800 }
+.card .meta{ color:#7a8b9a }
+
+/* フィルタのピル */
+.pill{ border:3px solid #dbe7ff; }
+.pill.active,.pill:hover{ background:linear-gradient(90deg,var(--accent2),var(--accent3)); color:#053; border-color:transparent }
+
+/* フッターも明るめ */
+.site-footer{ background:#fff; color:#6a7b88; border-top:4px solid #ffe0f6 }

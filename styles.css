@@ -197,3 +197,64 @@ h1,h2,h3,h4,p{ margin:0; }
   .pickup-card, .product-card, .panel{ background:#0f172a; border-color:var(--border); }
   .news-list a{ color:#e5e7eb; }
 }
+
+/* === Responsive hardening pack =========================== */
+
+/* 1) ナビ：横スクロール＋スナップ、折返し防止 */
+.bar-nav{
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.bar-link{
+  scroll-snap-align: start;
+  white-space: nowrap; /* 英数が折れて潰れるのを防止 */
+}
+
+/* 極小幅ではサブラベルを隠す */
+@media (max-width: 360px){
+  .bar-link small{ display:none; }
+  .bar-link .en{ font-size: 12px; }
+}
+
+/* 2) アンカーのヘッダー食い込み防止（#news 等に効く） */
+:root{ --header-offset: 72px; } /* ヘッダーの実高さに合わせて調整 */
+[id]{ scroll-margin-top: var(--header-offset); }
+
+/* 3) 自動フィットのカード段組（メディアクエリ依存を減らす） */
+.product-grid{
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.grid-3{
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.banner-row{
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* 4) ヒーローの高さを端末に馴染ませる */
+.hero-slide img{
+  height: clamp(180px, 42vh, 480px);
+}
+/* 低い横向き画面（例：iPhone横）では更に圧縮 */
+@media (max-height: 540px) and (orientation: landscape){
+  .hero{ padding: .75rem 0 1rem; }
+  .hero-slide img{ height: 38vh; }
+}
+
+/* 5) ノッチ/安全領域（iOS Safari） */
+.site-header{
+  padding-top: calc(10px + env(safe-area-inset-top));
+}
+
+/* 6) 動きを抑える設定の人にはスナップを弱める */
+@media (prefers-reduced-motion: reduce){
+  .bar-nav, .hero-track{ scroll-behavior: auto; }
+  .hero-track{ scroll-snap-type: none; }
+}
+
+/* 7) 細かい詰め：日付カラムを狭小端末で少し縮める */
+@media (max-width: 380px){
+  .news-list li{ grid-template-columns: 7.5ch 1fr; }
+}
+

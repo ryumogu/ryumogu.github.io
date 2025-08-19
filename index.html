@@ -149,10 +149,9 @@
       // start safer: one slow, thin arc away from player and one star
       spawnArc({speed: choice([0.5,-0.5]), width: rand(0.35,0.55)});
       spawnStar();
-    });
-      // one star to attract
-      spawnStar();
     }
+
+    
 
     function spawnArc(opt={}){
       const width = opt.width ?? rand(0.35, 0.7); // narrower to ensure gaps
@@ -166,8 +165,9 @@
       }
       const hue = (rand(0,1) < 0.5) ? 355 : 8; // reddish hues
       arcs.push({angle, speed, width, hue});
-    });
     }
+
+    
 
     function spawnStar(){
       stars.push({ angle: rand(0,TAU), alive:true });

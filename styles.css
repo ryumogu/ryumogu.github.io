@@ -154,3 +154,40 @@ h3{ font-size:1.5rem; margin-bottom:18px; }
 }
 .site-footer .container{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
 .sns a{ margin-left:14px; }
+
+
+
+/* --- Font rendering helpers (効果は環境依存) --- */
+html, body {
+  -webkit-font-smoothing: antialiased;       /* mac系で効く */
+  -moz-osx-font-smoothing: grayscale;        /* mac Firefox */
+  text-rendering: optimizeLegibility;        /* 合字・AA優先 */
+  font-size: 17px;                           /* ほんの少しだけ大きく */
+}
+
+/* --- サブピクセルAA消失の犯人候補をいったんOFF --- */
+.site-header {
+  backdrop-filter: none !important;
+  background: rgba(255,255,255,.98) !important; /* ほぼ白で代替 */
+}
+
+.glass {
+  backdrop-filter: none !important;
+  background: rgba(255,255,255,.92) !important;
+}
+
+/* transform/opacity でレイヤー化しやすい箇所の抑制 */
+.hero, .hero-rich, .glass {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* 英字フォントは見出しだけにして本文は日本語フォント寄りに */
+body {
+  font-family: "M PLUS Rounded 1c", "Yu Gothic UI", "Yu Gothic",
+               "Hiragino Kaku Gothic ProN", "Meiryo", system-ui,
+               -apple-system, "Segoe UI", "Noto Sans JP", sans-serif;
+}
+.logo, h1, h2, h3, .btn {
+  font-family: "Fredoka", "M PLUS Rounded 1c", system-ui, sans-serif;
+}

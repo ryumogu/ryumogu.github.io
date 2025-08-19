@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Orbit Dodge - One Tap Arcade</title>
+  <style>
+    :root{
+      --fg:#eaf6ff; --muted:#b7c7d6; --accent:#76d0ff; --danger:#ff5a6a;
+      --bg0:#0b0d13; --bg1:#0e1320; --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; background: radial-gradient(1200px 1000px at 50% 40%, #161b28, var(--bg0));
+      color:var(--fg); font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,\"Noto Sans JP\",Hiragino Kaku Gothic ProN,Meiryo,\"Helvetica Neue\",Arial,\"Apple Color Emoji\",\"Segoe UI Emoji\";
+      overflow:hidden; -webkit-tap-highlight-color: transparent;
+    }
+    canvas{ display:block; width:100vw; height:100vh; touch-action:none; }
+
+    /* HUD */
+    #hud{ position:fixed; inset: 12px 12px auto 12px; display:flex; align-items:center; gap:12px; z-index:5; pointer-events:none; }
+    .card{ pointer-events:auto; backdrop-filter: blur(8px); background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); padding:8px 12px; border-radius:14px; box-shadow: var(--shadow); }
+    .score{ font-weight:700; letter-spacing:.5px; }
+    .best{ color:var(--muted); font-size:.9rem; margin-left:8px; }
+    #pauseBtn{ cursor:pointer; font-size:14px; border:none; padding:8px 12px; border-radius:12px; background:rgba(255,255,255,.08); color:var(--fg); }
+
+    /* Overlays */
+    .overlay{ position:fixed; inset:0; display:grid; place-items:center; z-index:10; padding:24px; }
+    .panel{ width:min(560px, 92vw); border-radius:20px; padding:24px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); border:1px solid rgba(255,255,255,.12); box-shadow: var(--shadow); text-align:center; }
+    h1{ margin:0 0 8px; font-size: clamp(22px, 3.5vw, 34px); }
+    p{ margin:6px 0; color:var(--muted); }
+    .btn{ display:inline-block; margin-top:14px; padding:12px 18px; border-radius:14px; border:1px solid rgba(255,255,255,.2); background:linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.08)); color:var(--fg); text-decoration:none; cursor:pointer; font-weight:700; }
+    .row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    kbd{ background:rgba(0,0,0,.35); padding:4px 6px; border-radius:6px; border:1px solid rgba(255,255,255,.15); }
+
+    /* Mobile hint bubble */
+    .hint{ position:fixed; left:50%; bottom:18vh; transform:translateX(-50%); background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:var(--fg); padding:10px 12px; border-radius:12px; z-index:3; font-size:.95rem; box-shadow: var(--shadow); }
+
+    .hidden{ display:none !important; }
+  </style>
+</head>
+<body>
+  <canvas id="game" aria-label="Orbit Dodge game canvas"></canvas>
+
+  <div id="hud">
+    <div class="card score">SCORE <span id="score">0</span> <span class="best">BEST <span id="best">0</span></span></div>
+    <button id="pauseBtn" class="card" title="一時停止 (P)">⏸︎</button>
+  </div>
+
+  <div id="hint" class="hint">画面をタップ／クリックで<span style="font-weight:700">進行方向が反転</span>します</div>
+
+  <div id="startOverlay" class="overlay">
+    <div class="panel">
+      <h1>Orbit Dodge</h1>
+      <p>円軌道上を回る自機を、タップ一つで操るミニアーケード。</p>
+      <p>赤いアーク（障害物）を避け、<span style="color:#ffe066">★スター</span>を集めてスコアを伸ばそう！</p>
+      <div class="row" style="margin-top:10px">
+        <p>操作： <kbd>タップ / クリック / スペース</kbd> で進行方向を反転</p>
+      </div>
+      <button id="startBtn" class="btn">スタート</button>
+    </div>
+  </div>
+
+  <div id="overOverlay" class="overlay hidden">
+    <div class="panel">
+      <h1>Game Over</h1>
+      <p>今回のスコア：<b id="finalScore">0</b></p>
+      <p>ベスト：<b id="finalBest">0</b></p>
+      <div class="row"><button id="againBtn" class="btn">もう一度</button></div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    'use strict';
+    const TAU = Math.PI*2;
+    const canvas = document.getElementById('game');
+    const g = canvas.getContext('2d');
+
+    // UI
+    const startOverlay = document.getElementById('startOverlay');
+    const overOverlay  = document.getElementById('overOverlay');
+    const startBtn = document.getElementById('startBtn');
+    const againBtn = document.getElementById('againBtn');
+    const hint = document.getElementById('hint');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const scoreEl = document.getElementById('score');
+    const bestEl  = document.getElementById('best');
+    const finalScoreEl = document.getElementById('finalScore');
+    const finalBestEl  = document.getElementById('finalBest');
+
+    let state = 'menu'; // menu | play | pause | over
+    let dpr = window.devicePixelRatio || 1;
+    let W=0, H=0, CX=0, CY=0, R=0; // canvas size & orbit radius
+
+    // Invincibility window (seconds from start)
+    let invulUntil = 0;
+
+    // Game objects
+    const player = { angle: 0, dir: 1, speed: 1.8, size: 20, tint: '#86e4ff' };
+    let arcs = [];   // obstacles: { angle, speed, width, hue }
+    let stars = [];  // collectibles on orbit: { angle, alive }
+    let time = 0, score = 0, best = Number(localStorage.getItem('orbit_best')||0);
+    bestEl.textContent = best;
+
+    // Difficulty params
+    let nextArcSpawn = 0;  // time to next obstacle
+    let nextStarSpawn = 0; // time to next star
+
+    // Audio (lazy-init on first user gesture)
+    let actx = null;
+    function initAudio(){
+      if(actx) return; try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ actx = null; }
+    }
+    function beep(freq=440, dur=0.08, type='sine', gain=0.07){ if(!actx) return; const o=actx.createOscillator(); const g=actx.createGain();
+      o.type=type; o.frequency.value=freq; o.connect(g); g.connect(actx.destination); g.gain.value=gain; o.start(); g.gain.setTargetAtTime(0, actx.currentTime+dur, 0.03); o.stop(actx.currentTime+dur+0.1);
+    }
+
+    function resize(){
+      dpr = window.devicePixelRatio || 1;
+      const cssW = Math.max(320, window.innerWidth);
+      const cssH = Math.max(480, window.innerHeight);
+      canvas.width = Math.floor(cssW * dpr);
+      canvas.height = Math.floor(cssH * dpr);
+      // use CSS pixel space for logic/drawing; transform handles HiDPI
+      W = cssW; H = cssH; CX=W/2; CY=H/2; R = Math.min(W, H) * 0.32; // orbit radius
+      g.setTransform(dpr,0,0,dpr,0,0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Helpers
+    const rand = (a,b)=> a + Math.random()*(b-a);
+    const choice = arr => arr[(Math.random()*arr.length)|0];
+    function wrap(a){ a%=TAU; if(a<0) a+=TAU; return a; }
+    function angDiff(a,b){ // shortest signed difference a-b in [-PI,PI]
+      let d = (a-b+Math.PI)%TAU; if(d<0) d+=TAU; return d-Math.PI;
+    }
+
+    function reset(){
+      time=0; score=0; player.angle=0; player.dir=1; player.speed=1.6; arcs.length=0; stars.length=0;
+      invulUntil = 1.5; // 1.5s grace period after (re)start
+      nextArcSpawn=0; nextStarSpawn=0; spawnInitial();
+      updateScoreHUD();
+    }
+
+    function spawnInitial(){
+      // start safer: one slow, thin arc away from player and one star
+      spawnArc({speed: choice([0.5,-0.5]), width: rand(0.35,0.55)});
+      spawnStar();
+    });
+      // one star to attract
+      spawnStar();
+    }
+
+    function spawnArc(opt={}){
+      const width = opt.width ?? rand(0.35, 0.7); // narrower to ensure gaps
+      const speed = opt.speed ?? (Math.random()<0.5? -1:1) * rand(0.4, 1.2);
+      let angle = opt.angle;
+      if(angle == null){
+        // avoid spawning on top of player
+        const margin = width*0.5 + (player.size*0.7)/R + 0.25; // radians
+        let tries = 0;
+        do{ angle = rand(0,TAU); tries++; } while (Math.abs(angDiff(angle, player.angle)) < margin && tries < 40);
+      }
+      const hue = (rand(0,1) < 0.5) ? 355 : 8; // reddish hues
+      arcs.push({angle, speed, width, hue});
+    });
+    }
+
+    function spawnStar(){
+      stars.push({ angle: rand(0,TAU), alive:true });
+    }
+
+    function update(dt){
+      if(state!=='play') return;
+      time += dt; // survival time
+
+      // difficulty curve: every 8s add an arc up to a cap, speed ramps slowly
+      if(time > nextArcSpawn){
+        if(arcs.length < 4){ spawnArc(); }
+        nextArcSpawn = time + rand(7.5, 10.0);
+      }
+      if(time > nextStarSpawn){
+        if(stars.length < 3) spawnStar();
+        nextStarSpawn = time + rand(2.0, 4.5);
+      }
+
+      // speed ramp
+      player.speed = 1.6 + Math.min(1.4, time*0.04);
+      for(const a of arcs){ a.speed += (a.speed>0? 1:-1) * dt * 0.01; }
+
+      // move
+      player.angle = wrap(player.angle + player.dir * player.speed * dt);
+      for(const a of arcs){ a.angle = wrap(a.angle + a.speed * dt); }
+
+      // collisions with arcs
+      const playerAngHalf = (player.size*0.7) / R; // radians (a bit forgiving)
+      if(time >= invulUntil){
+        for(const a of arcs){
+          const d = Math.abs(angDiff(player.angle, a.angle));
+          if(d < (playerAngHalf + a.width*0.5)){
+            gameOver();
+            return;
+          }
+        }
+      }
+
+      // star pickups
+      for(const s of stars){ if(!s.alive) continue; const d = Math.abs(angDiff(player.angle, s.angle));
+        if(d < (playerAngHalf + 10/R)){
+          s.alive=false; score += 7; updateScoreHUD(); sparkleAtAngle(s.angle); beep(740, 0.06, 'triangle', 0.05);
+        }
+      }
+      // cull dead stars
+      for(let i=stars.length-1;i>=0;i--) if(!stars[i].alive) stars.splice(i,1);
+
+      // passive score: survive = + time
+      score += dt*2; updateScoreHUD();
+    }
+
+    function updateScoreHUD(){ scoreEl.textContent = Math.floor(score); }
+
+    // Particles (simple)
+    const particles = []; // {x,y,vx,vy,life}
+    function sparkleAtAngle(angle){
+      const x = CX + R * Math.cos(angle);
+      const y = CY + R * Math.sin(angle);
+      for(let i=0;i<16;i++){
+        const sp = rand(40, 140); const th = rand(0,TAU);
+        particles.push({x,y, vx:Math.cos(th)*sp, vy:Math.sin(th)*sp, life: rand(0.25,0.6)});
+      }
+    }
+
+    function draw(dt){
+      // clear
+      g.clearRect(0,0,canvas.width,canvas.height);
+
+      // background vignette
+      const grd = g.createRadialGradient(CX, CY, Math.min(W,H)*0.1, CX, CY, Math.max(W,H)*0.7);
+      grd.addColorStop(0, '#0f1423'); grd.addColorStop(1, '#090b11');
+      g.fillStyle = grd; g.fillRect(0,0,canvas.width,canvas.height);
+
+      // orbit ring
+      g.save();
+      g.translate(CX, CY);
+      g.lineWidth = 10; g.strokeStyle = 'rgba(255,255,255,.08)';
+      g.beginPath(); g.arc(0,0,R,0,TAU); g.stroke();
+      g.restore();
+
+      // stars
+      for(const s of stars){
+        const x = CX + R * Math.cos(s.angle);
+        const y = CY + R * Math.sin(s.angle);
+        // glow
+        g.beginPath(); g.fillStyle='rgba(255,224,102,.15)'; g.arc(x,y,20,0,TAU); g.fill();
+        // core
+        g.beginPath(); g.fillStyle='#ffe066'; g.arc(x,y,6,0,TAU); g.fill();
+      }
+
+      // obstacles (arcs)
+      g.save();
+      g.translate(CX, CY);
+      for(const a of arcs){
+        g.beginPath();
+        g.strokeStyle = `hsla(${a.hue} 90% 62% / .95)`;
+        g.lineWidth = 22; g.lineCap='round';
+        g.arc(0,0,R, a.angle - a.width/2, a.angle + a.width/2);
+        g.stroke();
+      }
+      g.restore();
+
+      // player (triangle pointing along tangent)
+      const px = CX + R * Math.cos(player.angle);
+      const py = CY + R * Math.sin(player.angle);
+      const tangent = player.angle + (player.dir>0 ? Math.PI/2 : -Math.PI/2);
+      g.save();
+      g.translate(px, py); g.rotate(tangent);
+      // glow
+      g.globalAlpha = 0.4; g.fillStyle = '#81e9ff'; g.beginPath(); g.arc(0,0,18,0,TAU); g.fill(); g.globalAlpha=1;
+      // body
+      g.beginPath(); g.moveTo(0, -player.size*0.9); g.lineTo(player.size*0.7, player.size*0.7); g.lineTo(-player.size*0.7, player.size*0.7); g.closePath();
+      g.fillStyle = player.tint; g.shadowColor = 'rgba(0,0,0,.5)'; g.shadowBlur=10; g.fill(); g.shadowBlur=0;
+      g.restore();
+
+      // particles
+      for(let i=particles.length-1;i>=0;i--){ const p=particles[i]; p.life-=dt; if(p.life<=0){ particles.splice(i,1); continue; } const f= p.life; const drag = 1 - (1-Math.min(0.98, 0.9+0.08*(1-f))) * dt*60; p.vx*=drag; p.vy*=drag; p.x+=p.vx*dt; p.y+=p.vy*dt; g.globalAlpha = Math.max(0, f); g.fillStyle='#ffe066'; g.beginPath(); g.arc(p.x,p.y,3,0,TAU); g.fill(); g.globalAlpha=1; }
+
+      // center dot
+      g.beginPath(); g.fillStyle='rgba(255,255,255,.12)'; g.arc(CX,CY,6,0,TAU); g.fill();
+    }
+
+    // Loop
+    let last=performance.now();
+    function frame(now){
+      const dt = Math.min(0.033, (now-last)/1000); last=now;
+      update(dt); draw(dt);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    // Controls
+    function toggleDir(){ if(state==='menu'){ startGame(); return; } if(state==='play'){ player.dir*=-1; beep(520,0.04,'square',0.03); } else if(state==='over'){ restart(); } }
+
+    // Prevent arrow keys from scrolling on desktop
+    window.addEventListener('keydown', (e)=>{
+      if(e.code==='Space' || e.key===' '){ e.preventDefault(); toggleDir(); }
+      if(e.key==='p' || e.key==='P'){ e.preventDefault(); togglePause(); }
+    }, {passive:false});
+
+    // Pointer controls
+    canvas.addEventListener('pointerdown', (e)=>{ e.preventDefault(); initAudio(); if(state==='pause'){ togglePause(); return; } toggleDir(); }, {passive:false});
+
+    // Buttons
+    startBtn.addEventListener('click', ()=>{ initAudio(); startGame(); });
+    againBtn.addEventListener('click', ()=>{ restart(); });
+    pauseBtn.addEventListener('click', ()=>{ togglePause(); });
+
+    function show(el){ el.classList.remove('hidden'); }
+    function hide(el){ el.classList.add('hidden'); }
+
+    function startGame(){ reset(); state='play'; hide(startOverlay); hide(overOverlay); hint.classList.remove('hidden'); setTimeout(()=>hint.classList.add('hidden'), 2500); }
+    function restart(){ reset(); state='play'; hide(overOverlay); }
+    function togglePause(){ if(state==='play'){ state='pause'; pauseBtn.textContent='▶'; } else if(state==='pause'){ state='play'; pauseBtn.textContent='⏸︎'; } }
+
+    function gameOver(){ state='over'; finalScoreEl.textContent = Math.floor(score);
+      if(score>best){ best=Math.floor(score); localStorage.setItem('orbit_best', String(best)); }
+      finalBestEl.textContent = best; bestEl.textContent = best; show(overOverlay); beep(220,0.2,'sawtooth',0.05); }
+
+    // Kick off in menu
+    state='menu'; show(startOverlay);
+  })();
+  </script>
+</body>
+</html>

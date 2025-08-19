@@ -1,184 +1,33 @@
-/* ========== カラーテーマ（ポップ＆淡いトーン） ========== */
+/* ================================
+   基本設定（カラートークン／リセット）
+================================== */
 :root{
-  --bg:#fff7fb;        /* やわらかい背景 */
-  --paper:#ffffff;     /* カードの紙色   */
-  --ink:#25303b;       /* 文字色         */
-  --muted:#6a7b88;     /* 補助文字       */
-  --accent:#ff6bd6;    /* メイン色       */
-  --accent2:#6aa8ff;   /* サブ色         */
-  --accent3:#7ee787;   /* アクセント③    */
+  /* 色は必要に応じて調整してください */
+  --bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #ec6aa8;      /* 淡いピンク系アクセント */
+  --accent-weak: #fde2ee; /* アクセントの薄い版 */
+  --link: #0ea5e9;
+  --shadow: 0 10px 25px rgba(17,24,39,.08), 0 4px 10px rgba(17,24,39,.06);
+
+  --container: 1120px;
+  --radius: 14px;
+  --radius-lg: 20px;
+
+  --gap-1: .5rem;
+  --gap-2: .75rem;
+  --gap-3: 1rem;
+  --gap-4: 1.5rem;
+  --gap-5: 2rem;
+  --gap-6: 3rem;
+  --gap-8: 4rem;
+
+  --nav-h: 64px;
+  --font-body: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+               "Meiryo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-/* ========== 共通リセット / フォント設定 ========== */
-*{ box-sizing:border-box; margin:0; padding:0; }
-html,body{ height:100%; }
-html, body{
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-size: 17px; 
-  line-height: 1.7;
-}
-body{
-  font-family: "Noto Sans JP", "Meiryo", "Yu Gothic UI",
-               "Hiragino Kaku Gothic ProN", sans-serif;
-  font-weight: 400;
-  color:var(--ink);
-  background:
-    radial-gradient(80vmax 60vmax at 10% -10%, #ffe3f7 0%, transparent 60%),
-    radial-gradient(70vmax 50vmax at 110% 10%, #e0f3ff 0%, transparent 60%),
-    radial-gradient(60vmax 40vmax at 50% 120%, #eafff2 0%, transparent 60%),
-    var(--bg);
-}
-a{ color:var(--accent); text-decoration:none; }
-img{ max-width:100%; display:block; }
-ul{ list-style:none; }
-.container{ width:min(1100px,92%); margin-inline:auto; }
-
-/* ========== ヘッダー（不透明背景でAA維持） ========== */
-.site-header{
-  position:sticky; top:0; z-index:10;
-  background:#ffffff; 
-  border-bottom:4px solid #ffe0f6;
-}
-.site-header .container{
-  display:flex; align-items:center; justify-content:space-between; padding:14px 0;
-}
-.logo{ font-weight:800; font-size:1.25rem; }
-.logo a{ color:var(--ink); }
-.logo, h1, h2, h3, .btn{
-  font-family: "Noto Sans JP", sans-serif;
-  font-weight:700;
-}
-nav a{
-  margin-left:14px; padding:6px 12px;
-  font-weight:700; border-radius:12px;
-}
-nav a:hover, nav a.active{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:white;
-}
-
-/* ========== ヒーロー ========== */
-.hero, .hero-rich{
-  padding:96px 0 88px;
-  text-align:center;
-  background:
-    radial-gradient(60vmax 30vmax at 80% -10%, rgba(255,107,214,.15), transparent 60%),
-    radial-gradient(60vmax 40vmax at 0% 120%, rgba(106,168,255,.15), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,1) 75%);
-}
-.hero h2{ font-size:2.2rem; margin-bottom:.4em; }
-.hero p{ color:var(--muted); max-width:50ch; margin:0 auto 1.2em; }
-.glass{
-  background:#ffffff;
-  border:3px solid #ffe0f6;
-  border-radius:24px;
-  padding:32px 22px;
-  box-shadow:0 18px 40px rgba(255,107,214,.12);
-}
-.hero-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-
-/* ========== ボタン（淡い単色＆影半分） ========== */
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  white-space:nowrap;
-  padding:12px 20px;
-  line-height:1;
-  border-radius:999px;
-  font-weight:700;
-  border:2px solid transparent;
-
-  background:#ffe4f2;          /* 淡いピンク単色 */
-  color:#25303b;
-
-  box-shadow:0 5px 0 #fbcce2;  /* 影の厚みを半分に */
-
-  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
-}
-.btn:hover{ filter:saturate(110%); }
-.btn:active{ transform:translateY(2px); box-shadow:0 3px 0 #f7b9d8; }
-
-.btn.ghost{
-  background:#fff;
-  color:var(--ink);
-  border:2px solid #dbe7ff;
-  box-shadow:0 5px 0 #cfe0ff;
-}
-
-/* ========== セクション ========== */
-.section{ padding:56px 0; }
-.section.alt{
-  background:linear-gradient(#fff,#fff) padding-box,
-             linear-gradient(90deg,#ffe0f6,#dbe7ff) border-box;
-  border:4px solid transparent;
-}
-h3{ font-size:1.5rem; margin-bottom:18px; }
-
-/* ========== グリッド / カード ========== */
-.grid{ display:grid; gap:18px; }
-.grid-works{ grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
-.card{
-  background:var(--paper);
-  border:4px solid #ffe0f6;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 14px 30px rgba(0,0,0,.05);
-  transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
-  position:relative;
-}
-.card:hover{
-  transform:translateY(-4px) rotate(-.2deg);
-  box-shadow:0 24px 40px rgba(255,107,214,.15);
-  border-color:#ffc5ec;
-}
-.card-body{ padding:14px; }
-.card h4{ font-size:1.2rem; margin-bottom:.3em; }
-.card .meta{ color:#7a8b9a; font-weight:700; font-size:.9rem; margin-bottom:.5em; }
-.actions{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-
-/* NEWバッジ */
-.badge{
-  position:absolute; top:10px; left:10px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:#fff; font-weight:900;
-  padding:6px 10px; border-radius:12px;
-  box-shadow:0 6px 0 #ffc5ec;
-  font-size:.8rem;
-}
-
-/* ========== その他要素 ========== */
-.members{ line-height:1.9; color:var(--muted); }
-.news{ line-height:1.9; color:var(--muted); }
-
-/* ========== フィルターピル（作品ページ用） ========== */
-.filters{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
-.pill{
-  background:#fff; color:var(--ink);
-  border:2px solid #dbe7ff;
-  border-radius:999px; padding:8px 14px; cursor:pointer; font-weight:600;
-}
-.pill.active,.pill:hover{
-  background:linear-gradient(90deg,var(--accent2),var(--accent3));
-  color:#053; border-color:transparent;
-}
-
-/* ========== フッター ========== */
-.site-footer{
-  background:#fff;
-  color:#6a7b88;
-  border-top:4px solid #ffe0f6;
-  padding:24px 0;
-}
-.site-footer .container{
-  display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-}
-.sns a{ margin-left:14px; }
-
-/* ========== レスポンシブ微調整 ========== */
-@media (max-width:640px){
-  .hero h2{ font-size:1.9rem; }
-  nav a{ margin-left:10px; }
-}
+*{ box-sizing: border-box; }
+html,body{ height: 10

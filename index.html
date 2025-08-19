@@ -1,69 +1,88 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>（サークル名）公式サイト</title>
-  <meta name="description" content="（サークル名）の公式サイト。制作ゲームの情報、ニュース、お問い合わせ。" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="（サークル名）の公式サイト。制作ゲームの情報、ニュース、お問い合わせ。">
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="icon" href="./assets/favicon.png" />
+  <!-- ポップ系丸ゴシック -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+  <!-- スタイル（キャッシュ回避のため v=2） -->
+  <link rel="stylesheet" href="./styles.css?v=2">
 </head>
 <body>
+  <!-- ================= Header ================= -->
   <header class="site-header">
     <div class="container">
-      <h1 class="logo">（サークル名）</h1>
+      <h1 class="logo"><a href="./">（サークル名）</a></h1>
       <nav>
-        <a href="/works/">作品</a>
-        <a href="#about">サークル</a>
-        <a href="#news">ニュース</a>
-        <a href="#contact">お問い合わせ</a>
+        <a href="./works/">作品</a>
+        <a href="./#about">サークル</a>
+        <a href="./#news">ニュース</a>
+        <a href="./#contact">お問い合わせ</a>
       </nav>
     </div>
   </header>
 
-<section class="hero hero-rich">
-  <div class="container glass">
-    <h2>ゲームで、もっとワクワクを。</h2>
-    <p>インディーゲームを制作・販売するサークルです。PC / モバイル向けの2D・3D作品を中心に活動中。</p>
-    <div class="hero-actions">
-      <a class="btn" href="/works/">作品を見る</a>
-      <a class="btn ghost" href="#contact">問い合わせ</a>
-    </div>
-  </div>
-</section>
-
-  <section id="works" class="section">
-    <div class="container">
-      <h3>作品紹介</h3>
-      <div class="grid">
-        <!-- 作品カード（必要数だけ複製） -->
-        <article class="card">
-          <img src="assets/sample-1.jpg" alt="作品Aのスクリーンショット" />
-          <h4>作品タイトルA</h4>
-          <p>ジャンル / 対応OS などの短い説明。</p>
-          <div class="actions">
-            <a class="btn ghost" href="#" target="_blank" rel="noopener">トレーラー</a>
-            <a class="btn" href="#" target="_blank" rel="noopener">購入 / ダウンロード</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/sample-2.jpg" alt="作品Bのスクリーンショット" />
-          <h4>作品タイトルB</h4>
-          <p>特徴や見どころを1～2行で。</p>
-          <div class="actions">
-            <a class="btn ghost" href="#" target="_blank" rel="noopener">トレーラー</a>
-            <a class="btn" href="#" target="_blank" rel="noopener">購入 / ダウンロード</a>
-          </div>
-        </article>
+  <!-- ================= Hero ================= -->
+  <section class="hero hero-rich">
+    <div class="container glass">
+      <h2>ゲームで、もっとワクワクを。</h2>
+      <p>インディーゲームを制作・販売するサークルです。PC / モバイル向けの2D・3D作品を中心に活動中。</p>
+      <div class="hero-actions">
+        <a class="btn" href="./works/">作品を見る</a>
+        <a class="btn ghost" href="./#contact">問い合わせ</a>
       </div>
     </div>
   </section>
 
+  <!-- ================= Works (pickup) ================= -->
+  <section id="works" class="section">
+    <div class="container">
+      <h3>注目タイトル</h3>
+      <div class="grid grid-works">
+        <!-- 作品カード（必要数だけ複製して差し替え） -->
+        <article class="card">
+          <span class="badge">NEW</span>
+          <img src="./assets/sample-1.jpg" alt="作品Aのスクリーンショット">
+          <div class="card-body">
+            <h4>作品タイトルA</h4>
+            <p class="meta">PC / 2D Action</p>
+            <p>高速アクションとスコアアタックが特徴の短編タイトル。</p>
+            <div class="actions">
+              <a class="btn ghost" href="#" target="_blank" rel="noopener">トレーラー</a>
+              <a class="btn" href="#" target="_blank" rel="noopener">購入 / DL</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="./assets/sample-2.jpg" alt="作品Bのスクリーンショット">
+          <div class="card-body">
+            <h4>作品タイトルB</h4>
+            <p class="meta">Steam / Puzzle</p>
+            <p>直感操作のパズル。全50ステージ・実績対応。</p>
+            <div class="actions">
+              <a class="btn ghost" href="#" target="_blank" rel="noopener">トレーラー</a>
+              <a class="btn" href="#" target="_blank" rel="noopener">Steam</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p style="text-align:center; margin-top:16px;">
+        <a class="btn ghost" href="./works/">すべての作品を見る</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= About ================= -->
   <section id="about" class="section alt">
     <div class="container">
       <h3>サークルについて</h3>
-      <p>（サークルの紹介文。得意分野、開発ツール、活動歴、イベント参加など）</p>
+      <p>（サークルの紹介文。得意分野、開発ツール、活動歴、イベント参加などを1〜3段落で）</p>
       <ul class="members">
         <li><strong>リーダー / プロデューサー：</strong>名前</li>
         <li><strong>プログラマー：</strong>名前</li>
@@ -73,6 +92,7 @@
     </div>
   </section>
 
+  <!-- ================= News ================= -->
   <section id="news" class="section">
     <div class="container">
       <h3>ニュース</h3>
@@ -83,19 +103,27 @@
     </div>
   </section>
 
+  <!-- ================= Contact ================= -->
   <section id="contact" class="section alt">
     <div class="container">
       <h3>お問い合わせ</h3>
-      <p>取材・コラボ・配信ガイドライン等のご連絡は下記フォームからどうぞ。</p>
+      <p>取材・コラボ・配信ガイドライン等のご連絡は下記からどうぞ。</p>
 
-      <!-- 1) Googleフォームを使う場合：フォームの埋め込みURLに差し替え -->
-      <!-- <iframe src="https://docs.google.com/forms/d/e/フォームID/viewform?embedded=true" width="100%" height="900" frameborder="0">読み込んでいます…</iframe> -->
+      <!-- 1) Googleフォーム埋め込み（おすすめ）：URLを差し替えて使用 -->
+      <!--
+      <iframe
+        src="https://docs.google.com/forms/d/e/ここにフォームIDを入れる/viewform?embedded=true"
+        width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">
+        読み込んでいます…
+      </iframe>
+      -->
 
-      <!-- 2) ひとまずメールリンクだけでもOK -->
+      <!-- 2) ひとまずメールリンク -->
       <p><a class="btn" href="mailto:contact@example.com">メールで問い合わせる</a></p>
     </div>
   </section>
 
+  <!-- ================= Footer ================= -->
   <footer class="site-footer">
     <div class="container">
       <small>© <span id="year"></span> （サークル名）</small>
@@ -108,7 +136,9 @@
     </div>
   </footer>
 
+  <!-- ================= Scripts ================= -->
   <script>
+    // 年号の自動更新
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>

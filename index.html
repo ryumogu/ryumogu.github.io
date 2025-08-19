@@ -1,19 +1,21 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <link rel="stylesheet" href="./styles.v2.css?v=20250819-02">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>（サークル名）公式サイト</title>
   <meta name="description" content="（サークル名）の公式サイト。作品情報、グッズ、イベント、サポート、お知らせ。" />
-  <link rel="stylesheet" href="./styles.css" />
+  <!-- フォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- 同じ階層の styles.css を読み込み（キャッシュバスター付き） -->
+  <link rel="stylesheet" href="./styles.css?v=20250819-1" />
   <link rel="icon" href="./assets/favicon.png" />
 </head>
 <body>
   <!-- キーボード操作用スキップリンク -->
   <a class="skip-link" href="#main">メインに移動</a>
 
-  <!-- 上部ユーティリティ（ブログ/ショップ/採用/ブランド など） -->
+  <!-- 上部ユーティリティ -->
   <div class="utility-bar">
     <div class="container">
       <nav class="utility-nav" aria-label="ユーティリティ">
@@ -58,40 +60,40 @@
   </header>
 
   <main id="main">
-    <!-- ヒーロー（スライド風の大バナー。CSSで横スクロール/フェードにできます） -->
+    <!-- ヒーロー -->
     <section class="hero">
       <div class="container">
         <div class="hero-track">
           <a class="hero-slide" href="#">
-            <img src="./assets/hero_01.jpg" alt="新作タイトル『Sample Days』特設サイトへ" />
+            <img src="./assets/hero_01.jpg" alt="新作タイトル『Sample Days』特設サイトへ" loading="lazy" />
           </a>
           <a class="hero-slide" href="#">
-            <img src="./assets/hero_02.jpg" alt="ダウンロード版 配信開始" />
+            <img src="./assets/hero_02.jpg" alt="ダウンロード版 配信開始" loading="lazy" />
           </a>
           <a class="hero-slide" href="#">
-            <img src="./assets/hero_03.jpg" alt="コンプリートパックのご案内" />
+            <img src="./assets/hero_03.jpg" alt="コンプリートパックのご案内" loading="lazy" />
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ピックアップバナー（大きな告知） -->
+    <!-- ピックアップ -->
     <section class="pickup">
       <div class="container grid-3">
         <a class="pickup-card" href="#">
-          <img src="./assets/pickup_01.jpg" alt="メインヒロインCV・体験版公開" />
+          <img src="./assets/pickup_01.jpg" alt="メインヒロインCV・体験版公開" loading="lazy" />
           <span class="badge">NEW</span>
         </a>
         <a class="pickup-card" href="#">
-          <img src="./assets/pickup_02.jpg" alt="公式ページ公開" />
+          <img src="./assets/pickup_02.jpg" alt="公式ページ公開" loading="lazy" />
         </a>
         <a class="pickup-card" href="#">
-          <img src="./assets/pickup_03.jpg" alt="サブスク配信情報" />
+          <img src="./assets/pickup_03.jpg" alt="サブスク配信情報" loading="lazy" />
         </a>
       </div>
     </section>
 
-    <!-- NEWS / INFORMATION（時系列リスト） -->
+    <!-- NEWS -->
     <section id="news" class="news">
       <div class="container">
         <header class="section-header">
@@ -99,7 +101,6 @@
           <a class="more" href="#">すべて見る</a>
         </header>
         <ul class="news-list">
-          <!-- 例：最新順。日付は <time> を使用 -->
           <li>
             <time datetime="2025-08-10">25/08/10</time>
             <a href="#">『Sample Days』公式ページでサンプルボイスを公開しました</a>
@@ -120,7 +121,7 @@
       </div>
     </section>
 
-    <!-- PRODUCTS（サムネイル一覧） -->
+    <!-- PRODUCTS -->
     <section id="products" class="products">
       <div class="container">
         <header class="section-header">
@@ -130,19 +131,19 @@
 
         <div class="product-grid">
           <a class="product-card" href="#">
-            <img src="./assets/product_01.jpg" alt="Sample Days plus" />
+            <img src="./assets/product_01.jpg" alt="Sample Days plus" loading="lazy" />
             <h3>Sample Days plus</h3>
           </a>
           <a class="product-card" href="#">
-            <img src="./assets/product_02.jpg" alt="よめ◯◯ ダウンロード版" />
+            <img src="./assets/product_02.jpg" alt="よめ◯◯ ダウンロード版" loading="lazy" />
             <h3>よめ◯◯（DL）</h3>
           </a>
           <a class="product-card" href="#">
-            <img src="./assets/product_03.jpg" alt="新本 PREMIUM PACK" />
+            <img src="./assets/product_03.jpg" alt="新本 PREMIUM PACK" loading="lazy" />
             <h3>新本 PREMIUM PACK</h3>
           </a>
           <a class="product-card" href="#">
-            <img src="./assets/product_04.jpg" alt="Complete Pack（DL）" />
+            <img src="./assets/product_04.jpg" alt="Complete Pack（DL）" loading="lazy" />
             <h3>Complete Pack（DL）</h3>
           </a>
         </div>
@@ -157,8 +158,8 @@
           <a class="more" href="#">オンラインショップ</a>
         </header>
         <div class="banner-row">
-          <a href="#"><img src="./assets/goods_01.jpg" alt="抱き枕カバー 一般販売" /></a>
-          <a href="#"><img src="./assets/goods_02.jpg" alt="イベント限定グッズ" /></a>
+          <a href="#"><img src="./assets/goods_01.jpg" alt="抱き枕カバー 一般販売" loading="lazy" /></a>
+          <a href="#"><img src="./assets/goods_02.jpg" alt="イベント限定グッズ" loading="lazy" /></a>
         </div>
       </div>
     </section>
@@ -183,7 +184,7 @@
       </div>
     </section>
 
-    <!-- 連絡先/リンク -->
+    <!-- CONTACT / LINK -->
     <section id="contact" class="contact-links">
       <div class="container grid-2">
         <article class="panel">
